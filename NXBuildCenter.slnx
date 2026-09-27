@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="NXBuildCenter.SmokeTests/NXBuildCenter.SmokeTests.csproj" />
+  <Project Path="NXBuildCenter/NXBuildCenter.csproj" />
+</Solution>

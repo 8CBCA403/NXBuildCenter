@@ -1,0 +1,63 @@
+<Window x:Class="NXBuildCenter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="NX Build Center" Height="840" Width="1180" MinHeight="720" MinWidth="980"
+        WindowStartupLocation="CenterScreen" Background="#0B0E14" Foreground="#EDF2F7">
+    <Window.Resources>
+        <SolidColorBrush x:Key="Panel" Color="#121722"/>
+        <SolidColorBrush x:Key="Border" Color="#293143"/>
+        <SolidColorBrush x:Key="Muted" Color="#93A0B4"/>
+        <SolidColorBrush x:Key="Accent" Color="#55D6BE"/>
+        <Style TargetType="TextBlock"><Setter Property="FontFamily" Value="Segoe UI"/></Style>
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="#F5F7FA"/><Setter Property="Background" Value="#253047"/>
+            <Setter Property="BorderBrush" Value="#34415B"/><Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="16,9"/><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button">
+                <Border x:Name="B" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="8" Padding="{TemplateBinding Padding}"><ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/></Border>
+                <ControlTemplate.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="B" Property="Background" Value="#33415F"/></Trigger><Trigger Property="IsEnabled" Value="False"><Setter TargetName="B" Property="Opacity" Value="0.45"/></Trigger></ControlTemplate.Triggers>
+            </ControlTemplate></Setter.Value></Setter>
+        </Style>
+        <Style x:Key="PrimaryButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#3EC8AF"/><Setter Property="Foreground" Value="#07110F"/><Setter Property="BorderBrush" Value="#66E0CB"/><Setter Property="FontSize" Value="15"/><Setter Property="Padding" Value="23,12"/>
+        </Style>
+        <Style TargetType="ComboBox"><Setter Property="Background" Value="#0D111A"/><Setter Property="Foreground" Value="#111827"/><Setter Property="BorderBrush" Value="#34415B"/><Setter Property="Padding" Value="10,7"/><Setter Property="FontSize" Value="14"/></Style>
+        <Style TargetType="TextBox"><Setter Property="Background" Value="#0D111A"/><Setter Property="Foreground" Value="#F2F5F8"/><Setter Property="BorderBrush" Value="#34415B"/><Setter Property="CaretBrush" Value="White"/><Setter Property="Padding" Value="10,8"/></Style>
+        <Style TargetType="CheckBox"><Setter Property="Foreground" Value="#D9E1EB"/><Setter Property="Margin" Value="0,5,20,5"/></Style>
+        <Style x:Key="Card" TargetType="Border"><Setter Property="Background" Value="{StaticResource Panel}"/><Setter Property="BorderBrush" Value="{StaticResource Border}"/><Setter Property="BorderThickness" Value="1"/><Setter Property="CornerRadius" Value="14"/><Setter Property="Padding" Value="20"/></Style>
+    </Window.Resources>
+
+    <Grid Margin="28,22,28,24">
+        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="18"/><RowDefinition Height="Auto"/><RowDefinition Height="16"/><RowDefinition Height="Auto"/><RowDefinition Height="16"/><RowDefinition Height="*"/><RowDefinition Height="16"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal"><Border Background="#163A37" CornerRadius="9" Padding="10,5" Margin="0,0,12,0"><TextBlock Text="NX" FontWeight="Bold" Foreground="{StaticResource Accent}" FontSize="18"/></Border><TextBlock Text="NX Build Center" FontSize="27" FontWeight="SemiBold" VerticalAlignment="Center"/><Border Background="#232B3B" CornerRadius="10" Padding="9,3" Margin="12,3,0,3"><TextBlock Text="Windows · x64" Foreground="{StaticResource Muted}" FontSize="11"/></Border></StackPanel>
+                <TextBlock Text="Atmosphère + Hekate 版本选择、源码编译与 SD 卡打包" Foreground="{StaticResource Muted}" Margin="0,8,0,0" FontSize="14"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center"><Button x:Name="RefreshButton" Content="刷新版本" Click="RefreshButton_Click" Margin="0,0,8,0"/><Button Content="打开输出" Click="OpenOutputButton_Click"/></StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="16"/><ColumnDefinition/></Grid.ColumnDefinitions>
+            <Border Style="{StaticResource Card}"><Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions><Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><StackPanel Orientation="Horizontal"><Ellipse Width="10" Height="10" Fill="#6D8FFF" Margin="0,0,9,0"/><TextBlock Text="Atmosphère" FontSize="17" FontWeight="SemiBold"/></StackPanel><TextBlock Grid.Column="1" Text="CFW" Foreground="#8797FF" FontWeight="SemiBold"/></Grid><ComboBox x:Name="AtmosphereCombo" Grid.Row="1" Margin="0,16,0,0" DisplayMemberPath="DisplayName" SelectionChanged="VersionCombo_SelectionChanged"/><TextBlock x:Name="AtmosphereInfo" Grid.Row="2" Margin="0,10,0,0" Foreground="{StaticResource Muted}" Text="正在读取官方版本……"/></Grid></Border>
+            <Border Grid.Column="2" Style="{StaticResource Card}"><Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions><Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><StackPanel Orientation="Horizontal"><Ellipse Width="10" Height="10" Fill="#FFB45B" Margin="0,0,9,0"/><TextBlock Text="Hekate + Nyx" FontSize="17" FontWeight="SemiBold"/></StackPanel><TextBlock Grid.Column="1" Text="BOOTLOADER" Foreground="#FFBE70" FontWeight="SemiBold"/></Grid><ComboBox x:Name="HekateCombo" Grid.Row="1" Margin="0,16,0,0" DisplayMemberPath="DisplayName" SelectionChanged="VersionCombo_SelectionChanged"/><TextBlock x:Name="HekateInfo" Grid.Row="2" Margin="0,10,0,0" Foreground="{StaticResource Muted}" Text="正在读取官方版本……"/></Grid></Border>
+        </Grid>
+
+        <Border Grid.Row="4" Style="{StaticResource Card}">
+            <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="1.05*"/><ColumnDefinition Width="24"/><ColumnDefinition Width="1.4*"/></Grid.ColumnDefinitions>
+                <StackPanel><TextBlock Text="构建方式" FontSize="15" FontWeight="SemiBold"/><RadioButton x:Name="OfficialModeRadio" Checked="ModeRadio_Checked" Margin="0,14,0,4" Foreground="#F4F7FA"><StackPanel><TextBlock Text="官方发布包" FontWeight="SemiBold"/><TextBlock Text="最快，下载所选版本并组合" Foreground="{StaticResource Muted}" FontSize="12"/></StackPanel></RadioButton><RadioButton x:Name="SourceModeRadio" IsChecked="True" Checked="ModeRadio_Checked" Margin="0,8,0,0" Foreground="#F4F7FA"><StackPanel><TextBlock Text="编译最新源码（HEAD）" FontWeight="SemiBold"/><TextBlock Text="拉取默认分支最新提交，本机完整构建" Foreground="{StaticResource Muted}" FontSize="12"/></StackPanel></RadioButton></StackPanel>
+                <StackPanel Grid.Column="2"><Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><TextBlock Text="输出目录 / SD 卡根目录" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center"/><Button Grid.Column="1" Content="检测 SD 卡" Click="DetectSdButton_Click" Padding="10,6" Margin="8,0"/><Button Grid.Column="2" Content="浏览…" Click="BrowseButton_Click" Padding="10,6"/></Grid><TextBox x:Name="OutputPathBox" Margin="0,10,0,7"/><WrapPanel><CheckBox x:Name="PreserveConfigCheck" IsChecked="True" Content="保留已有 hekate_ipl.ini"/><CheckBox x:Name="CreateZipCheck" IsChecked="True" Content="同时创建 ZIP"/><CheckBox x:Name="InstallDepsCheck" IsChecked="True" Content="自动补齐构建依赖"/></WrapPanel></StackPanel>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="6" Style="{StaticResource Card}" Padding="0">
+            <Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                <Grid Background="#171D2A" Margin="1" Height="48"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><StackPanel Orientation="Horizontal" Margin="18,0" VerticalAlignment="Center"><TextBlock Text="构建日志" FontWeight="SemiBold"/><TextBlock x:Name="StatusText" Text="  ·  就绪" Foreground="{StaticResource Muted}"/></StackPanel><StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0,0,14,0" VerticalAlignment="Center"><TextBlock Text="环境：" Foreground="{StaticResource Muted}" VerticalAlignment="Center"/><TextBlock x:Name="DependencyText" Text="检测中" Foreground="#FFBE70" VerticalAlignment="Center" Margin="0,0,10,0"/><Button x:Name="InstallEnvironmentButton" Content="安装构建环境" Click="InstallEnvironmentButton_Click" Padding="10,5"/></StackPanel></Grid>
+                <TextBox x:Name="LogBox" Grid.Row="1" IsReadOnly="True" BorderThickness="0" Background="#0D111A" FontFamily="Cascadia Mono,Consolas" FontSize="12" Foreground="#B9C5D6" Padding="16,12" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" TextWrapping="NoWrap"/>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="8"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><StackPanel><ProgressBar x:Name="BuildProgress" Height="6" Maximum="100" Background="#1A2230" Foreground="{StaticResource Accent}" BorderThickness="0"/><TextBlock Text="仅使用两个项目的官方 GitHub；不包含密钥、签名补丁或受版权保护内容。" Foreground="{StaticResource Muted}" FontSize="11" Margin="0,8,0,0"/></StackPanel><StackPanel Grid.Column="1" Orientation="Horizontal" Margin="20,0,0,0"><Button x:Name="CancelButton" Content="取消" Click="CancelButton_Click" Visibility="Collapsed" Margin="0,0,8,0"/><Button x:Name="RunButton" Style="{StaticResource PrimaryButton}" Content="生成 SD 卡文件" Click="RunButton_Click"/></StackPanel></Grid>
+    </Grid>
+</Window>

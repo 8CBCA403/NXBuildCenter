@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>NXBuildCenter</AssemblyName>
+    <RootNamespace>NXBuildCenter</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Version>1.1.0</Version>
+    <Authors>NX Build Center contributors</Authors>
+    <Description>Windows build and SD card packaging tool for Atmosphere and Hekate.</Description>
+  </PropertyGroup>
+
+</Project>
